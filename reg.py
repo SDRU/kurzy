@@ -9,7 +9,8 @@ else:
 
     def kurz(mena):
         html_content = urllib2.urlopen('http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.jsp').read()
-        text = re.search(r'(?P<Mnozstvo>\d+)</td><td>' + mena + r'</td><td align="right">(?P<Kurz>\d+,\d+)</td>', html_content)
+        # re.escape vsetky specialne znaky opatri lomitkom, aby sa nebrali ako regularne vyrazy
+        text = re.search(r'(?P<Mnozstvo>\d+)</td><td>' + re.escape(mena) + r'</td><td align="right">(?P<Kurz>\d+,\d+)</td>', html_content)
         if text == None:
             print "Mena " + sys.argv[1] + " nie je v zozname!"
         else:
